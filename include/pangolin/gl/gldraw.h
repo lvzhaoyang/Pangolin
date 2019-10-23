@@ -348,6 +348,16 @@ void glDrawPoints(const std::vector<Eigen::Matrix<P, N, 1>, Allocator>& vertices
     glDrawVertices(vertices, GL_POINTS);
 }
 
+// Draw a vector of 2d or 3d points in color 
+template<typename P, int N, int M, class Allocator>
+void glDrawColoredVertices(
+    const std::vector<Eigen::Matrix<P, N, 1>, Allocator>& vertices, 
+    const std::vector<Eigen::Matrix<P, M, 1>, Allocator>& color, 
+    GLenum mode = GL_POINTS)
+{
+    glDrawColoredVertices(vertices.size(), vertices.data(), color.data(), mode);
+}
+
 // Draws a vector of 2d or 3d lines.
 //
 //  Precondition: ``vertices.size()`` must be a multiple of 2.
