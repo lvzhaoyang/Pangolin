@@ -28,13 +28,11 @@
 #include "gl_draw.hpp"
 #include <pangolin/gl/gldraw.h>
 #include <pybind11/eigen.h>
+#include <pybind11/stl.h>
 
 namespace py_pangolin {
 
   void bind_gl_draw(pybind11::module &m){
-
-    m.def("glDrawAxis",
-          (void (*)(float))&pangolin::glDrawAxis);
 
     m.def("glDrawColouredCube",
           &pangolin::glDrawColouredCube,
@@ -64,7 +62,12 @@ namespace py_pangolin {
     m.def("glUnsetFrameOfReference", &pangolin::glUnsetFrameOfReference);
 
     m.def("glDrawAlignedBox", (void (*)(const Eigen::AlignedBox2f &, GLenum)) &pangolin::glDrawAlignedBox<float>, pybind11::arg("box"), pybind11::arg("mode") = GL_TRIANGLE_FAN);
+    
+    m.def("glDrawVertices", (void (*)(const std::vector<Eigen::Vector3d> &, GLenum)) &pangolin::glDrawVertices<double>);
+    m.def("glDrawVertices", (void (*)(const std::vector<Eigen::Vector3f> &, GLenum)) &pangolin::glDrawVertices<float>);
 
+    m.def("glDrawColoredVertices", (void (*)(const std::vector<Eigen::Vector3d> &, const std::vector<Eigen::Vector3d> &, GLenum)) &pangolin::glDrawColoredVertices<double>);
+    m.def("glDrawColoredVertices", (void (*)(const std::vector<Eigen::Vector3f> &, const std::vector<Eigen::Vector3f> &, GLenum)) &pangolin::glDrawColoredVertices<float>);
   }
 
 
